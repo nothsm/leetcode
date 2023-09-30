@@ -63,7 +63,7 @@ class DynamicArray:
 
     def getCapacity(self) -> int:
         return self.capacity
-    
+
     def _checkResize(self) -> None:
         if self.size == self.capacity:
             self.resize()
