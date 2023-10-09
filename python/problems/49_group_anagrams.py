@@ -1,5 +1,4 @@
-from collections import OrderedDict
-from typing import List
+from typing import List, Dict, Tuple
 
 """
 49. Group Anagrams
@@ -37,18 +36,18 @@ Space complexity = O(n)
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        counts: dict = dict()
-        for i in range(len(strs)):
-            count: tuple = tuple(self.count_chars(strs[i]).items())
-            if count not in counts:
-                counts[count] = []
-            counts[count].append(strs[i])
-        return list(counts.values())
+        anagrams: Dict[Tuple[str, int], List[str]] = {}
+        for s in strs:
+            anagram: Tuple[str, int] = tuple(self.count_chars(sorted(s)).items())
+            if anagram not in anagrams:
+                anagrams[anagram] = []
+            anagrams[anagram].append(s)
+        return list(anagrams.values())
 
-    def count_chars(self, s: str) -> OrderedDict:
-        count: dict = {}
+    def count_chars(self, s: str) -> Dict[str, int]:
+        count: Dict[str, int] = {}
         for i in range(len(s)):
             if s[i] not in count:
                 count[s[i]] = 0
             count[s[i]] = count[s[i]] + 1
-        return OrderedDict(sorted(count.items()))
+        return count
