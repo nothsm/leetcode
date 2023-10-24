@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Set, Tuple
 
 """
 15. 3Sum
@@ -39,27 +39,19 @@ Space Complexity: O(1)
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        triplets: List[List[int]] = list()
-
-        nums = sorted(nums)
-        for i in range(len(nums)):
-            target: int = -nums[i]
-            left: int = i + 1
-            right: int = len(nums) - 1
-            
-            while left < right:
-                s: int = nums[left] + nums[right]
-                if s < target:
-                    left += 1
-                elif s > target:
-                    right -= 1
-                else:
-                    triplet: List[int] = [nums[i], nums[left], nums[right]]
-                    triplets.append([nums[i], nums[left], nums[right]])
-                    while left < right and nums[left] == triplet[1]:
-                        left += 1
-                    while left < right and nums[right] == triplet[2]:
-                        right -= 1
-            while i < len(nums) - 1 and nums[i] == nums[i+1]:
-                i += 1
-        return triplets
+        N = sorted(nums)
+        ts: Set[Tuple[int, int, int]] = set()
+        for i in range(len(N)):
+            l: int = i + 1
+            r: int = len(N) - 1
+            while l < r:
+                s = N[i] + N[l] + N[r]
+                if s < 0:
+                    l += 1
+                elif s > 0:
+                    r -= 1
+                else: 
+                    ts.add((N[i], N[l], N[r]))
+                    l += 1
+                    r -= 1
+        return [list(t) for t in ts]
