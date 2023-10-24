@@ -50,7 +50,7 @@ class Solution:
                     l += 1
                 elif s > 0:
                     r -= 1
-                else: 
+                else:
                     ts.add((ns[i], ns[l], ns[r]))
                     l += 1
                     r -= 1
