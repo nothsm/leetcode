@@ -63,7 +63,7 @@ class Solution:
             box: Set[str] = set()
             for j in range(len(board[i])):
                 box_i: int = ((3*i) + (j // 3)) % 9
-                box_j: int = (j % 3) + (3*(i // 3))
+                box_j: int = (j % 3) + (3 * (i // 3))
                 if board[i][j] in row and board[i][j] != ".":
                     return False
                 if board[j][i] in col and board[j][i] != ".":

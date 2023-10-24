@@ -37,13 +37,14 @@ Space Complexity: O(n)
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        indices: Dict[int, int] = {}
-        for i in range(len(nums)):
-            indices[nums[i]] = i
+        ns = nums
+        ids: Dict[int, int] = {}
+        for i in range(len(ns)):
+            ids[ns[i]] = i
 
-        for i in range(len(nums)):
-            r = target - nums[i]
-            if r in indices and indices[r] != i:
-                return [i, indices[r]]
+        for i in range(len(ns)):
+            r = target - ns[i]
+            if r in ids and ids[r] != i:
+                return [i, ids[r]]
         return []
         
