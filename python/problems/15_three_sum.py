@@ -39,19 +39,19 @@ Space Complexity: O(1)
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        N = sorted(nums)
+        ns = sorted(nums)
         ts: Set[Tuple[int, int, int]] = set()
-        for i in range(len(N)):
+        for i in range(len(ns)):
             l: int = i + 1
-            r: int = len(N) - 1
+            r: int = len(ns) - 1
             while l < r:
-                s = N[i] + N[l] + N[r]
+                s = ns[i] + ns[l] + ns[r]
                 if s < 0:
                     l += 1
                 elif s > 0:
                     r -= 1
                 else: 
-                    ts.add((N[i], N[l], N[r]))
+                    ts.add((ns[i], ns[l], ns[r]))
                     l += 1
                     r -= 1
         return [list(t) for t in ts]
