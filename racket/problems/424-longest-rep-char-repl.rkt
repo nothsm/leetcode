@@ -6,5 +6,18 @@
               ([(k v) ht])
         (argmax cdr (list max-freq (cons k v))))))
 
-
-(most-common (hash #\a 3 #\b 2 #\c 300))
+(define (character-replacement s k)
+  (define (go left right cts max-len)
+    (if (= right (string-length s)) max-len
+    (let* ([cts-new (hash-update cts (string-ref s right) add1 0)]
+           [common (most-common cts-new)]
+           [window-len (add1 (- right left))])
+        (cond [(<= (- window-len (hash-ref cts-new common)) k) (go left 
+                                                                   (add1 right)
+                                                                   cts-new 
+                                                                   (max window-len max-len))]
+              [else (go (add1 left)
+                        right
+                        (hash-update cts (string-ref s left) sub1)
+                        max-len)]))))
+    (go 0 0 (hash) 0))
