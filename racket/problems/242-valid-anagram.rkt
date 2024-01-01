@@ -22,11 +22,10 @@ s and t consist of lowercase English letters.
 Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
 |#
 
-(define (counts s)
-  (foldl (lambda (char hash)
-           (hash-update hash char add1 0))
-         #hash()
-         (string->list s)))
+(define (anagram s)
+    (foldl (lambda (i acc) (hash-update acc (string-ref s i) add1 0))
+           (hash)
+           (range (string-length s))))
 
-(define (is-anagram s t) 
-  (equal? (counts s) (counts t)))
+(define (is-anagram s t)
+  (equal? (anagram s) (anagram t)))
