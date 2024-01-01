@@ -1,10 +1,9 @@
 #lang racket
 
-(define (anagram str)
-    (foldl 
-        (lambda (char ht) (hash-update ht char add1 0))
-        #hash()
-        (string->list str)))
+(define (anagram s)
+    (foldl (lambda (i acc) (hash-update acc (string-ref s i) add1 0))
+           (hash)
+           (range (string-length s))))
 
 (define (group-anagrams strs)
   (group-by anagram strs))
