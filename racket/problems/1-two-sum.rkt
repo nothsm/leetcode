@@ -1,17 +1,11 @@
 #lang racket
 
-(define (zip lst1 lst2)
-    (map cons lst1 lst2))
-
-(define (indices nums)
-    (make-hash (zip nums (range (length nums)))))
-
 (define (two-sum nums target)
-    (define i-rights (indices nums))
-    
-    (define (two-sum-acc nums target i-left)
-            (define i-right (hash-ref i-rights (- target (first nums)) #f))
-            (if (and i-right (not (= i-left i-right))) 
-                (list i-left i-right) 
-                (two-sum-acc (rest nums) target (add1 i-left))))
-    (two-sum-acc nums target 0))
+  (define idx (for/hash ([x nums] [i (in-naturals)])
+                (values x i)))
+
+  (let loop ([lst nums] [left 0])
+    (let* ([want (- target (car lst))] 
+           [right (hash-ref idx want #f)])
+        (cond [(and right (< left right)) (list left right)]
+              [else (loop (cdr lst) (add1 left))]))))
