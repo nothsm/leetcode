@@ -1,12 +1,12 @@
 #lang racket
 
-(define (product-except-self nums) 
-    (define (left-acc nums acc)
-        (match nums 
-            ['() (cdr acc)]
-            [(cons x xs) (left-acc xs (cons (* x (car acc)) acc))]))
-    (define (prod-acc nums left-prods rprod-acc acc)
-        (match* (nums left-prods)
-            [('() _) acc]  
-            [((cons x xs) (cons y ys)) (prod-acc xs ys (* rprod-acc x) (cons (* y rprod-acc) acc))]))
-    (prod-acc (reverse nums) (left-acc nums '(1)) 1 '()))
+(define (product-except-self nums)
+    (define right 
+        (let loop ([lst (reverse nums)] [a '(1)])
+            (match lst
+                ['() (cdr a)]
+                [(cons x xs) (loop xs (cons (* x (car a)) a))])))
+    (let loop ([lst nums] [l 1] [rps right] [a '()])
+        (match* (lst rps)
+            [('() '()) (reverse a)]
+            [((cons x xs) (cons r rs)) (loop xs (* l x) rs (cons (* l r) a))])))
