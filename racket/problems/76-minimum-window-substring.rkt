@@ -1,7 +1,5 @@
 #lang racket
 
-(require racket/trace)
-
 (define (zip lst1 lst2)
   (map cons lst1 lst2))
 
@@ -64,3 +62,6 @@
       [else
        (loop l (add1 r) (safe-hash-inc right-char seen) 
              (delta-dec delta seen right-char) sl sr)])))
+
+
+(rest (list 1))
