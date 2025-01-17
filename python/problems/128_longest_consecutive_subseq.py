@@ -1,18 +1,26 @@
-from typing import Dict, List
+def dedup(xs):
+    ys = []
+    seen = set()
+    for x in xs:
+        if x not in seen:
+            ys.append(x)
+            seen.add(x)
+    return ys
+
 
 class Solution:
-    def longestConsecutive(self, nums: List[int]) -> int:
-        seqs: Dict[int, int] = dict()
-        longest: int = 0
+    def longestConsecutive(self, xs: List[int]) -> int:
+        xs = dedup(xs)
+        ys = set(xs)
 
-        for n in nums:
-            if n not in seqs:
-                l: int = seqs.get(n-1, 0)
-                r: int= seqs.get(n+1, 0)
-                seq_len: int = l + r + 1
-                
-                seqs[n] = seq_len
-                longest = max(seq_len, longest)
-                seqs[n-l] = seq_len
-                seqs[n+r] = seq_len
-        return longest
+        acc = 0
+        for x in xs:
+            if x - 1 not in ys:
+                seq = 0
+                y = x
+                while y in ys:
+                    seq += 1
+                    y += 1
+                acc = max(seq, acc)
+        return acc
+        
