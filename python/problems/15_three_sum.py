@@ -1,20 +1,27 @@
-from typing import List, Set, Tuple
-
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        ns = sorted(nums)
-        ts: Set[Tuple[int, int, int]] = set()
-        for i in range(len(ns)):
-            l: int = i + 1
-            r: int = len(ns) - 1
+    def threeSum(self, xs: List[int]) -> List[List[int]]:
+        xs = sorted(xs)
+        ys = []
+        uniq = set()
+        for i, x in enumerate(xs):
+            t = -x
+            l = i + 1
+            r = len(xs) - 1
+            acc = []
             while l < r:
-                s = ns[i] + ns[l] + ns[r]
-                if s < 0:
+                if xs[l] + xs[r] == t:
+                    acc.append((xs[l], xs[r]))
                     l += 1
-                elif s > 0:
-                    r -= 1
-                else:
-                    ts.add((ns[i], ns[l], ns[r]))
+                    r = r
+                elif xs[l] + xs[r] < t:
                     l += 1
+                    r = r
+                elif xs[l] + xs[r] > t:
+                    l = l
                     r -= 1
-        return [list(t) for t in ts]
+            for y, z in acc:
+                if (x, y, z) not in uniq:
+                    ys.append([x, y, z])
+                    uniq.add((x, y, z))
+        return ys
+
