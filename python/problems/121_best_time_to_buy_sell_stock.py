@@ -1,11 +1,14 @@
-from typing import List
-
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        ps = prices
-        max_profit: int = 0
-        min_price: int = ps[0]
-        for i in range(1, len(ps)):
-            max_profit = max(ps[i] - min_price, max_profit)
-            min_price = min(ps[i], min_price)
-        return max_profit
+    def maxProfit(self, xs: List[int]) -> int:
+        acc = 0
+        l = 0
+        r = 1
+        while l < r and r < len(xs):
+            if xs[r] < xs[l]:
+                acc = max(xs[r] - xs[l], acc)
+                l = r
+                r += 1
+            elif xs[r] >= xs[l]:
+                acc = max(xs[r] - xs[l], acc)
+                r += 1
+        return acc
