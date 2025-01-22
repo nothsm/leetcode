@@ -1,18 +1,20 @@
-from itertools import accumulate
-from typing import List
-
-def rev(obj):
-    return reversed(obj)
-
-def acc(obj, f):
-    return accumulate(obj, func=f)
-
 class Solution:
-    def trap(self, height: List[int]) -> int:
-        hs = height
-        lms: List[int] = list(acc(hs, f=max))
-        rms: List[int] = list(rev(list(acc(rev(hs), f=max))))
-        w: int = 0
-        for i in range(len(hs)):
-            w += min(lms[i], rms[i]) - hs[i]
-        return w
+    def trap(self, xs: List[int]) -> int:
+        acc = 0
+        ls = []
+        for x in xs:
+            ls.append(acc)
+            acc = max(x, acc)
+
+        acc = 0
+        rs = []
+        for x in reversed(xs):
+            rs.append(acc)
+            acc = max(x, acc)
+        rs = reversed(rs)
+        
+        acc = 0
+        for l, r, x in zip(ls, rs, xs):
+            acc += max(min(l, r) - x, 0)
+
+        return acc
