@@ -1,23 +1,20 @@
 class Solution:
-    def search(self, xs: List[int], target: int) -> int:
-        lo = 0
-        hi = len(xs) - 1
-        mid = ((hi - lo) // 2) + lo
-        while xs[lo] != target and xs[mid] != target and xs[hi] != target:
-            if lo >= mid or mid >= hi or lo >= hi:
-                break
-            if target < xs[mid]:
-                hi = mid
-                mid = ((hi - lo) // 2) + lo
-            elif target > xs[mid]:
-                lo = mid
-                mid = ((hi - lo) // 2) + lo
-            
-        if xs[lo] == target:
-            return lo
-        elif xs[mid] == target:
-            return mid
-        elif xs[hi] == target:
-            return hi
-        else:
-            return -1
+    def search(self, xs: List[int], t: int) -> int:
+        def go(l, r):
+            if xs[l] == t:
+                return l
+            elif xs[r] == t:
+                return r
+            elif r - l - 1 == 0: # window size = r - l - 1
+                return -1
+            elif t <= xs[(l + r) // 2]:
+                return go(l, (l + r) // 2)
+            else:
+                return go((l + r) // 2, r)
+        match xs:
+            case []:
+                return -1
+            case [x]:
+                return 0 if x == t else -1
+            case _:
+                return go(0, len(xs) - 1)
