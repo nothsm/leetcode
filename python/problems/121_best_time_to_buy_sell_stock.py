@@ -1,14 +1,13 @@
 class Solution:
     def maxProfit(self, xs: List[int]) -> int:
-        acc = 0
         l = 0
-        r = 1
-        while l < r and r < len(xs):
+        r = l + 1
+        acc = 0
+        while r < len(xs):
+            acc = max(xs[r] - xs[l], acc)
             if xs[r] < xs[l]:
-                acc = max(xs[r] - xs[l], acc)
                 l = r
-                r += 1
-            elif xs[r] >= xs[l]:
-                acc = max(xs[r] - xs[l], acc)
+                r = l + 1
+            else:
                 r += 1
         return acc
