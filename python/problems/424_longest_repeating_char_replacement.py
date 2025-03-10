@@ -1,20 +1,34 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        cs = {}
-        max_count = 0
-        left, right = 0, 0
-        while right < len(s):
-            # update cs[s[right]]
-            cs[s[right]] = cs.get(s[right], 0) + 1
-            max_count = max(max_count, cs[s[right]])
-            
-            # EXTEND WINDOW CASE
-            if (right - left) - max_count < k:
-                right += 1
-            # SLIDE WINDOW CASE
-            else:
-                assert (right - left) - max_count == k
-                cs[s[left]] = cs[s[left]] - 1
-                left += 1
-                right += 1
-        return right - left
+        mp = {s[0]: 1}
+        C = s[0]
+        l = 0
+        r = 1
+        acc = r - l
+        while r < len(s):
+            n = (r - l) - mp[C]
+            if s[r] == C and n <= k:
+                mp[s[r]] = mp.get(s[r], 0) + 1
+                C = max(s[r], C, key=mp.__getitem__)
+                r += 1
+                acc = max(r - l, acc)
+            elif s[r] == C and n > k:
+                mp[s[l]] -= 1
+                mp[s[r]] = mp.get(s[r], 0) + 1
+                C = max(s[r], C, key=mp.__getitem__)
+                l += 1
+                r += 1
+                acc = max(r - l, acc)
+            elif s[r] != C and n < k:
+                mp[s[r]] = mp.get(s[r], 0) + 1
+                C = max(s[r], C, key=mp.__getitem__)
+                r += 1
+                acc = max(r - l, acc)
+            elif s[r] != C and n >= k:
+                mp[s[l]] -= 1
+                mp[s[r]] = mp.get(s[r], 0) + 1
+                C = max(s[r], C, key=mp.__getitem__)
+                l += 1
+                r += 1
+                acc = max(r - l, acc)
+        return r - l
