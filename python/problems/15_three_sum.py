@@ -1,27 +1,23 @@
 class Solution:
     def threeSum(self, xs: List[int]) -> List[List[int]]:
         xs = sorted(xs)
-        ys = []
-        uniq = set()
-        for i, x in enumerate(xs):
+
+        seen = set()
+        acc = []
+        for i, x in enumerate(xs[:-1]):
             t = -x
             l = i + 1
             r = len(xs) - 1
-            acc = []
-            while l < r:
-                if xs[l] + xs[r] == t:
-                    acc.append((xs[l], xs[r]))
+            while r - l > 0:
+                v = xs[l] + xs[r]
+                if v < t:
                     l += 1
-                    r = r
-                elif xs[l] + xs[r] < t:
+                elif v == t:
+                    tp = (xs[i], xs[l], xs[r])
+                    if tp not in seen:
+                        seen.add(tp)
+                        acc.append(list(tp))
                     l += 1
-                    r = r
-                elif xs[l] + xs[r] > t:
-                    l = l
+                elif v > t:
                     r -= 1
-            for y, z in acc:
-                if (x, y, z) not in uniq:
-                    ys.append([x, y, z])
-                    uniq.add((x, y, z))
-        return ys
-
+        return acc
