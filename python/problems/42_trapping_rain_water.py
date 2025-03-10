@@ -1,20 +1,17 @@
 class Solution:
     def trap(self, xs: List[int]) -> int:
+        l = 0
+        r = len(xs) - 1
+        L = xs[l]
+        R = xs[r]
         acc = 0
-        ls = []
-        for x in xs:
-            ls.append(acc)
-            acc = max(x, acc)
-
-        acc = 0
-        rs = []
-        for x in reversed(xs):
-            rs.append(acc)
-            acc = max(x, acc)
-        rs = reversed(rs)
-        
-        acc = 0
-        for l, r, x in zip(ls, rs, xs):
-            acc += max(min(l, r) - x, 0)
-
+        while r - l > 0:
+            if L <= R:
+                l += 1
+                acc += max(L - xs[l], 0)
+                L = max(xs[l], L)
+            elif R < L:
+                r -= 1
+                acc += max(R - xs[r], 0)
+                R = max(xs[r], R)
         return acc
