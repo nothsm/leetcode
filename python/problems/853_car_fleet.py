@@ -1,11 +1,9 @@
 class Solution:
-    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
-        xs = sorted(zip(position, speed), key=lambda ps: ps[0], reverse=True)
-        ys = []
+    def carFleet(self, T: int, ps: List[int], ss: List[int]) -> int:
+        xs = sorted(zip(ps, ss), key=lambda x: x[0], reverse=True)
+        acc = []
         for p, s in xs:
-            t = (target - p) / s
-            if not ys or t > ys[-1]:
-                ys.append(t)
-        return len(ys)
-
-        
+            t = (T - p) / s
+            if not acc or acc[-1] < t:
+                acc.append(t)
+        return len(acc)
