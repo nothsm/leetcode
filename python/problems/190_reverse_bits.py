@@ -1,38 +1,46 @@
+from operator import add, sub, mul, neg, lshift, rshift, and_, or_, gt, lt, eq
+
 N_BITS = 32
 
 def dec(x):
-    return x - 1
+    return sub(x, 1)
 
 def sub2(x):
-    return x - 2
+    return sub(x, 2)
 
-def shl1(x):
-    return x << 1
+def lshift1(x):
+    return lshift(x, 1)
 
 def is_pos(x):
-    return x > 0
+    return gt(x, 0)
 
 def is_neg(x):
-    return x < 0
+    return lt(x, 0)
+
+def is_zero(x):
+    return eq(x, 0)
 
 def double(x):
-    return 2*x
+    return mul(x, 2)
 
 def bitshift(x, shift):
     if is_pos(shift):
-        return x << shift
+        return lshift(x, shift)
     elif is_neg(shift):
-        return x >> -shift
+        return rshift(x, neg(shift))
     else:
         return x
 
 class Solution:
-    def reverseBits(self, n: int) -> int:
-        acc = 0
-        mask = 1
-        shift = dec(N_BITS)
-        for i in range(N_BITS):
-            acc |= bitshift(n & mask, shift)
-            mask = shl1(mask)
-            shift = sub2(shift)
-        return acc
+    def reverseBits(self, x: int) -> int:
+        def go(n, acc, mask, shift):
+          if is_zero(n):
+            return acc
+          else:
+            return go(dec(n), 
+                      or_(acc, 
+                          bitshift(and_(x, mask), 
+                                   shift)), 
+                      lshift1(mask), 
+                      sub2(shift))
+        return go(N_BITS, 0, 1, dec(N_BITS))
