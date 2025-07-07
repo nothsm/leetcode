@@ -24,14 +24,12 @@ fn solve(xs: Vec<i32>) -> String {
 }
 
 fn main() {
-   let mut s = String::new();
-    io::stdin()
-        .read_to_string(&mut s)
-        .expect("bad");
+    let mut s = String::new();
+    io::stdin().read_to_string(&mut s).expect("bad");
 
     match parse(s.as_str()) {
         Some(xs) => println!("{}", solve(xs)),
-        None => panic!()
+        None => panic!(),
     }
 }
 

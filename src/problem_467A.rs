@@ -9,10 +9,10 @@ fn parse_rooms(s: &str) -> Result<Vec<(i32, i32)>, i32> {
         if words.len() == 2 {
             match (words[0].parse(), words[1].parse()) {
                 (Ok(p), Ok(q)) => acc.push((p, q)),
-                _ => return Err(-1)
+                _ => return Err(-1),
             }
         } else {
-            return Err(-1)
+            return Err(-1);
         }
     }
     Ok(acc)
@@ -31,12 +31,13 @@ fn solve(xs: &Vec<(i32, i32)>) -> i32 {
 fn main() {
     let mut s = String::new();
     io::stdin().read_line(&mut String::new()).expect("");
-    io::stdin().read_to_string(&mut s).expect("bad input format");
+    io::stdin()
+        .read_to_string(&mut s)
+        .expect("bad input format");
 
     let xs = parse_rooms(s.as_str()).expect("bad input format");
     println!("{}", solve(&xs));
 }
-
 
 #[cfg(test)]
 mod test {
@@ -48,7 +49,6 @@ mod test {
         let expected = Ok(vec![(1, 1), (2, 2), (3, 3)]);
         assert_eq!(parse_rooms(s), expected);
     }
-
 
     #[test]
     fn parse_2() {

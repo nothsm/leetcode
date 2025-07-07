@@ -25,7 +25,7 @@ fn parse_n(s: &str) -> Result<i32, i32> {
     if words.len() == 2 {
         match words[1].parse() {
             Ok(n) => Ok(n),
-            Err(_) => Err(-1)
+            Err(_) => Err(-1),
         }
     } else {
         Err(-1)
@@ -38,14 +38,10 @@ fn parse_queue(s: &str) -> Result<Vec<char>, i32> {
 
 fn main() {
     let mut s_n = String::new();
-    io::stdin()
-        .read_line(&mut s_n)
-        .expect("bad input");
+    io::stdin().read_line(&mut s_n).expect("bad input");
 
     let mut s_queue = String::new();
-    io::stdin()
-        .read_line(&mut s_queue)
-        .expect("bad input");
+    io::stdin().read_line(&mut s_queue).expect("bad input");
 
     let n = parse_n(s_n.trim()).expect("bad");
     let xs = parse_queue(s_queue.trim()).expect("bad");
@@ -68,12 +64,18 @@ mod test {
 
     #[test]
     fn test1() {
-        assert_eq!(eval(vec!['B', 'G', 'G', 'B', 'G'], 1), vec!['G', 'B', 'G', 'G', 'B'])
+        assert_eq!(
+            eval(vec!['B', 'G', 'G', 'B', 'G'], 1),
+            vec!['G', 'B', 'G', 'G', 'B']
+        )
     }
 
     #[test]
     fn test2() {
-        assert_eq!(eval(vec!['B', 'G', 'G', 'B', 'G'], 2), vec!['G', 'G', 'B', 'G', 'B'])
+        assert_eq!(
+            eval(vec!['B', 'G', 'G', 'B', 'G'], 2),
+            vec!['G', 'G', 'B', 'G', 'B']
+        )
     }
 
     #[test]
@@ -86,12 +88,10 @@ mod test {
         assert_eq!(parse_n("5 1"), Ok(1));
     }
 
-
     #[test]
     fn test_parse_n2() {
         assert_eq!(parse_n("5 2"), Ok(2));
     }
-
 
     #[test]
     fn test_parse_n3() {
