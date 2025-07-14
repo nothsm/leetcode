@@ -7,7 +7,7 @@ fn parse(s: &str) -> Vec<(i32, i32)> {
         match line {
             "10" => acc.push((1, 0)),
             "01" => acc.push((0, 1)),
-            _ => panic!()
+            _ => panic!(),
         }
     }
     acc
@@ -17,18 +17,16 @@ fn eval(magnets: &[(i32, i32)]) -> Vec<Vec<(i32, i32)>> {
     let mut acc: Vec<Vec<(i32, i32)>> = vec![];
     for &(l1, r1) in magnets {
         match &mut acc[..] {
-            []          => acc.push(vec![(l1, r1)]),
-            [.., group] =>
-                match group[..] {
-                    []                        => group.push((l1, r1)),
-                    [.., (l2, _)] if r1 != l2 => group.push((l1, r1)),
-                    _                         => acc.push(vec![(l1, r1)])
-                }
+            [] => acc.push(vec![(l1, r1)]),
+            [.., group] => match group[..] {
+                [] => group.push((l1, r1)),
+                [.., (l2, _)] if r1 != l2 => group.push((l1, r1)),
+                _ => acc.push(vec![(l1, r1)]),
+            },
         }
     }
     acc
 }
-
 
 fn main() {
     let mut s = String::new();
