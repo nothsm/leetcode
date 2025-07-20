@@ -25,7 +25,6 @@ fn eval(xs: &Vec<i32>) -> i32 {
 }
 
 fn read() -> Vec<i32> {
-
     let mut s = String::new();
     io::stdin().read_line(&mut s).expect("couldnt read input");
 
